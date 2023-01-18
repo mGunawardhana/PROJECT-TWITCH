@@ -1,6 +1,7 @@
 package org.example;
 
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
@@ -16,7 +17,9 @@ import java.util.logging.Logger;
 
 import static com.mongodb.client.model.Updates.set;
 
-
+/**
+ * Hello world!
+ */
 public class App {
 
 
@@ -25,32 +28,37 @@ public class App {
         /* removing loggers and get only warnings */
         Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
 
-        MongoCollection<Document> mongoCollection = mongoDBConnection.getInstance().getMongoCollection();
+
+        String cnnectionString = "mongodb+srv://twitch:dinithi12345@twitchcluster.yqnkxgo.mongodb.net/?retryWrites=true&w=majority";
+        try (MongoClient mongoClient = MongoClients.create(cnnectionString)) {
+            MongoCollection<Document> cookies = mongoClient.getDatabase("xmas").getCollection("cookies");
 
 
-        /** CRUD also mean by create, read, update, delete */
+            /*printDatabases(mongoClient);*/
 
-        /* delete function */
-        deleteDocuments(mongoCollection);
+            /** CRUD also mean by create, read, update, delete */
 
-        /* create functions */
-        createDocuments(mongoCollection);
+            /* delete function */
+            deleteDocuments(cookies);
 
-        /* update function */
-        updateDocuments(mongoCollection);
+            /* create functions */
+            createDocuments(cookies);
 
-        /* find function */
-        findDocuments(mongoCollection);
+            /* update function */
+            updateDocuments(cookies);
+
+            /* find function */
+            findDocuments(cookies);
+        }
     }
 
-
-    private static void findDocuments(MongoCollection<Document> mongoCollection) {
+    private static void findDocuments(MongoCollection<Document> cookies) {
 
         System.out.println();
         System.out.println("FIND FUNCTION INVOKED =====================================================================================");
         System.out.println();
 
-        ArrayList<Document> lowCaloriesCookies = mongoCollection.find(Filters.gte("calories", 500)).into(new ArrayList<>());
+        ArrayList<Document> lowCaloriesCookies = cookies.find(Filters.gte("calories", 500)).into(new ArrayList<>());
         for (Document lowCaloriesCookie : lowCaloriesCookies) {
             System.out.println(lowCaloriesCookie.toJson());
         }
@@ -61,22 +69,23 @@ public class App {
 
     }
 
-    private static void updateDocuments(MongoCollection<Document> mongoCollection) {
+    private static void updateDocuments(MongoCollection<Document> cookies) {
 
         System.out.println();
         System.out.println("UPDATE FUNCTION INVOKED =====================================================================================");
         System.out.println();
 
         Random random = new Random();
-        mongoCollection.updateMany(new Document(), set("calories", random.nextInt(1000)));
+        cookies.updateMany(new Document(), set("calories", random.nextInt(1000)));
 
-        List<Document> cookiesList = mongoCollection.find().into(new ArrayList<>());
+        List<Document> cookiesList = cookies.find().into(new ArrayList<>());
         cookiesList.forEach(c -> {
             Object id = c.get("_id");
             Document filter = new Document("_id", id);
             Bson update = set("calories", random.nextInt(1000));
             FindOneAndUpdateOptions findOneAndUpdateOptions = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);
-            Document cookie = mongoCollection.findOneAndUpdate(filter, update, findOneAndUpdateOptions);
+            Document cookie = cookies.findOneAndUpdate(filter, update, findOneAndUpdateOptions);
+            System.out.println(cookie.toJson());
             System.out.println(cookie.toJson());
         });
 
@@ -86,13 +95,14 @@ public class App {
 
     }
 
-    private static void deleteDocuments(MongoCollection<Document> mongoCollection) {
+    private static void deleteDocuments(MongoCollection<Document> cookies) {
 
         System.out.println();
         System.out.println("DELETE FUNCTION INVOKED =====================================================================================");
         System.out.println();
 
-        mongoCollection.deleteMany(new Document());
+//        cookies.deleteMany(in("color",List.of("blue","orange")));
+        cookies.deleteMany(new Document());
 
         System.out.println();
         System.out.println("DELETE FUNCTION CLOSED =====================================================================================");
@@ -102,11 +112,20 @@ public class App {
 
 
     /* creating new database called xmas and collection called cookies, details chocolate cookies */
-    private static void createDocuments(MongoCollection<Document> mongoCollection) {
+    private static void createDocuments(MongoCollection<Document> cookies) {
 
         System.out.println();
         System.out.println("CREATE FUNCTION INVOKED =====================================================================================");
         System.out.println();
+
+
+        /* adding single data using insertOne() method */
+        /*cookies.insertOne(new Document("name", "chocolate chips"));*/
+
+        /* deleting previous cookies */
+        /* cookies.deleteMany(new Document());*/
+
+        /* deleting pink color cookies */
 
         /* adding more cookies using insertMany() method */
         List<Document> cookiesList = new ArrayList<>();
@@ -116,8 +135,7 @@ public class App {
         for (int i = 0; i < 10; i++) {
             cookiesList.add(new Document("cookies_id", i).append("color", "pink").append("array", ingredients));
         }
-
-        mongoCollection.insertMany(cookiesList);
+        cookies.insertMany(cookiesList);
 
         System.out.println();
         System.out.println("CREATE FUNCTION CLOSED =====================================================================================");
