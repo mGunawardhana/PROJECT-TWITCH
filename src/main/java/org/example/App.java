@@ -7,6 +7,7 @@ import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.example.Singleton.mongoDB.mongoDBConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 import static com.mongodb.client.model.Updates.set;
 
 
-public class App {
+public class App{
 
 
     public static void main(String[] args) {
