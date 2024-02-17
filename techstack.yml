@@ -1,0 +1,75 @@
+repo_name: mGunawardhana/PROJECT-TWITCH
+report_id: 576eba0950c447c779dd7f88971fa0f4
+version: 0.1
+repo_type: Public
+timestamp: '2024-02-17T14:03:59+00:00'
+requested_by: mGunawardhana
+provider: github
+branch: master
+detected_tools_count: 5
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/mGunawardhana/PROJECT-TWITCH
+  detection_source: Repo Metadata
+- name: MongoDB
+  description: The database for giant ideas
+  website_url: http://www.mongodb.com/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1030/leaf-360x360.png
+  detection_source_url: https://github.com/mGunawardhana/PROJECT-TWITCH/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Maneesha Gunawardhana
+  last_updated_on: 2023-01-18 06:39:04.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/mGunawardhana/PROJECT-TWITCH
+  detection_source: Repo Metadata
+- name: Logback
+  description: A logging framework for Java applications
+  website_url: https://logback.qos.ch/
+  open_source: false
+  hosted_saas: false
+  category: Monitoring
+  sub_category: Log Management
+  image_url: https://img.stackshare.io/service/2923/05518ecaa42841e834421e9d6987b04f_400x400.png
+  detection_source_url: https://github.com/mGunawardhana/PROJECT-TWITCH/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Maneesha Gunawardhana
+  last_updated_on: 2023-01-18 06:39:04.000000000 Z
+- name: ch.qos.logback:logback-classic
+  description: Logback-classic module
+  version: 1.2.11
+  license: EPL-1.0,LGPL-2.1+
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/mGunawardhana/PROJECT-TWITCH/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Maneesha Gunawardhana
+  last_updated_on: 2023-01-18 06:39:04.000000000 Z
+  vulnerabilities:
+  - name: logback serialization vulnerability
+    cve_id: CVE-2023-6378
+    cve_url: https://github.com/advisories/GHSA-vmq6-5m68-f53m
+    detected_date: Nov 30
+    severity: high
+    first_patched: 1.2.13
